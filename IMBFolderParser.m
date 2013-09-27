@@ -248,17 +248,28 @@
             }
             
             // Create an IMBVisualObject for each qualifying file...
-            
-            else if ([NSString imb_doesFileAtPath:path conformToUTI:_fileUTI])
+            else {
             {
-                NSString *betterName;
-                if (![fileURL getResourceValue:&betterName forKey:NSURLLocalizedNameKey error:NULL]) betterName = [fileURL lastPathComponent];
-                
-                betterName = [betterName stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-                
-                IMBObject* object = [self objectForPath:path name:betterName index:index++];
-                [objects addObject:object];
-                inNode.displayedObjectCount++;
+                BOOL shouldAddNode = [NSString imb_doesFileAtPath:path conformToUTI:_fileUTI];
+                if (shouldAddNode == NO) {
+                    // That should probably be a delegate method to add additional format support
+                    if (_fileUTI == (NSString *)kUTTypeImage) {
+                        // We also want to support things that NSImage supoorts
+                        NSString* uti = [NSString imb_UTIForFileAtPath:path];
+                        shouldAddNode = [[NSImage imageTypes] containsObject:uti];
+                    }
+                }
+                if (shouldAddNode)
+                {
+                    NSString *betterName;
+                    if (![fileURL getResourceValue:&betterName forKey:NSURLLocalizedNameKey error:NULL]) betterName = [fileURL lastPathComponent];
+
+                    betterName = [betterName stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+
+                    IMBObject* object = [self objectForPath:path name:betterName index:index++];
+                    [objects addObject:object];
+                    inNode.displayedObjectCount++;
+                }
             }
         }
     }
