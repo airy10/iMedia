@@ -239,6 +239,7 @@ const NSString* kSearchStringContext = @"searchString";
 			
 			if (_delegate && ![_delegate objectArrayController:self filterObject:object])
 			{
+                [pool drain];
 				continue;
 			}
 			

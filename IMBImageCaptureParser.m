@@ -813,7 +813,8 @@ static void ICAThumbnailCallback (ICAHeader* pbHeader)
 	
 	if( !CFURLGetFSRef ( (CFURLRef)[NSURL fileURLWithPath:self.downloadFolderPath], &downloadFolder ) ) 
 	{
-		NSLog( @"IMBMTPDownloadOperation: Can not download without dastination folder" );
+		NSLog( @"IMBMTPDownloadOperation: Can not download without destination folder" );
+        [pool drain];
 		return;
 	}
 	

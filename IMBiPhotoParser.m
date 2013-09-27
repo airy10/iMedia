@@ -958,6 +958,7 @@
             if (!validKeyPhotoKey)
             {
                 NSLog(@"%s Could not create event node %@ because could not determine key photo",__FUNCTION__,subNodeName);
+                [pool drain];
                 continue;
             }
 
