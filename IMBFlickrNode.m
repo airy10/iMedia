@@ -307,6 +307,11 @@ NSString* const IMBFlickrNodeProperty_UUID = @"uuid";
 		{
 			obj.location = [self imageURLForDesiredSize:parser.desiredSize fromPhotoDict:photoDict context:context];
 		}
+    else
+    {
+      [obj release];
+      continue;
+    }
 		obj.shouldDisableTitle = !canDownload;
 
 		obj.name = [photoDict objectForKey:@"title"];
