@@ -248,7 +248,7 @@
             }
             
             // Create an IMBVisualObject for each qualifying file...
-            else {
+            else
             {
                 BOOL shouldAddNode = [NSString imb_doesFileAtPath:path conformToUTI:_fileUTI];
                 if (shouldAddNode == NO) {
